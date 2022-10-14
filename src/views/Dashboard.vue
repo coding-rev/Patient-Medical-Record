@@ -26,7 +26,7 @@
         <!--X-Ray section starts here  -->
         <div class="container-section">
           <h5>X-Ray</h5>
-          <RecordList :recordlist="xrayList" />
+          <RecordList :recordlist="APIXrayList" />
         </div>
 
         <hr />
@@ -34,7 +34,7 @@
         <!-- Ultrasound Scan starts here -->
         <div class="container-section">
           <h5>Ultrasound Scan</h5>
-          <RecordList :recordlist="scanList" />
+          <RecordList :recordlist="APIUltrasoundList" />
         </div>
         <hr />
         <!-- ends here -->
@@ -61,6 +61,7 @@ import SideBar from "../components/SideBar.vue";
 import RecordList from "../components/RecordList.vue";
 import SelectWidget from "../components/SelectWidget.vue";
 import FormBtn from "../components/FormBtn.vue";
+import { gql } from 'graphql-tag'
 
 export default {
   name: "Dashboard",
@@ -167,6 +168,29 @@ export default {
       ],
     };
   },
+  mounted() {
+    this.$store.dispatch("retrieve_data");
+  },
+  computed: {
+    APIXrayList() {
+      return this.$store.state.xrayList;
+    },
+    APIUltrasoundList() {
+      return this.$store.state.ultrasoundList;
+    },
+  },
+  methods:{
+    async login() {
+      let result = await this.$apollo.mutate({
+        // Query
+        mutation: gql`mutation{
+        login(email: "tester@kompletecare.com", password: "password")
+    }`
+      })
+      console.log("LOGIN RESULT")
+      console.log(result)
+    }
+  }
 };
 </script>
 
