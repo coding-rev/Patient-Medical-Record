@@ -35,7 +35,8 @@
         <!-- Ultrasound Scan starts here -->
         <div class="container-section">
           <h5>Ultrasound Scan</h5>
-          <RecordList :recordlist="APIUltrasoundList" />
+          <!-- <RecordList :recordlist="APIUltrasoundList" /> -->
+          <RecordListShimmer/>
         </div>
         <hr />
         <!-- ends here -->
@@ -59,7 +60,7 @@
 
 <script>
 import SideBar from "../components/SideBar.vue";
-import RecordList from "../components/RecordList.vue";
+// import RecordList from "../components/RecordList.vue";
 import SelectWidget from "../components/SelectWidget.vue";
 import FormBtn from "../components/FormBtn.vue";
 import RecordListShimmer from '../components/RecordListShimmer.vue'
@@ -69,7 +70,7 @@ export default {
   name: "Dashboard",
   components: {
     SideBar,
-    RecordList,
+    // RecordList,
     SelectWidget,
     FormBtn,
     RecordListShimmer

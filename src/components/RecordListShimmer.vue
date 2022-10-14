@@ -7,6 +7,9 @@
     <li class="block-shimmer"></li>
     <li class="block-shimmer"></li>
     <li class="block-shimmer"></li>
+    <li class="block-shimmer"></li>
+    <li class="block-shimmer"></li>
+    <li class="block-shimmer"></li>
   </ul>
 </template>
 <script>
