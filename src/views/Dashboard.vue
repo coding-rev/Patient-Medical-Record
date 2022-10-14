@@ -26,7 +26,8 @@
         <!--X-Ray section starts here  -->
         <div class="container-section">
           <h5>X-Ray</h5>
-          <RecordList :recordlist="APIXrayList" />
+          <!-- <RecordList :recordlist="APIXrayList" /> -->
+          <RecordListShimmer/>
         </div>
 
         <hr />
@@ -61,6 +62,7 @@ import SideBar from "../components/SideBar.vue";
 import RecordList from "../components/RecordList.vue";
 import SelectWidget from "../components/SelectWidget.vue";
 import FormBtn from "../components/FormBtn.vue";
+import RecordListShimmer from '../components/RecordListShimmer.vue'
 import { gql } from 'graphql-tag'
 
 export default {
@@ -70,6 +72,7 @@ export default {
     RecordList,
     SelectWidget,
     FormBtn,
+    RecordListShimmer
   },
   data() {
     return {

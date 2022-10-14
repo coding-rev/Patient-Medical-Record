@@ -12,14 +12,7 @@
 export default {
   name: "RecordList",
   props: {
-    recordlist: { type: Array, required: false, default: () => [{
-                "id": "1",
-                "title": "No record",
-                "type": {
-                    "title": "X-Ray"
-                }
-            },] 
-  },
+    recordlist: { type: Array, required: true},
 }
 };
 </script>
