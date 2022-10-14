@@ -23,11 +23,13 @@
         <p>Click the tabs to view and edit patient medical details</p>
       </div>
       <div class="container-form">
+        <form>
         <!--X-Ray section starts here  -->
         <div class="container-section">
           <h5>X-Ray</h5>
-          <!-- <RecordList :recordlist="APIXrayList" /> -->
-          <RecordListShimmer/>
+          <RecordListShimmer v-if="!APIXrayList.length" />
+          <RecordList v-else :recordlist="APIXrayList" />
+          
         </div>
 
         <hr />
@@ -35,12 +37,13 @@
         <!-- Ultrasound Scan starts here -->
         <div class="container-section">
           <h5>Ultrasound Scan</h5>
-          <!-- <RecordList :recordlist="APIUltrasoundList" /> -->
-          <RecordListShimmer/>
+          <RecordListShimmer v-if="!APIUltrasoundList.length" />
+          <RecordList v-else :recordlist="APIUltrasoundList" />
+          
         </div>
         <hr />
         <!-- ends here -->
-        <form>
+        
           <div id="fields">
             <div class="form-control">
               <label class="title">CT Scan</label>
@@ -60,7 +63,7 @@
 
 <script>
 import SideBar from "../components/SideBar.vue";
-// import RecordList from "../components/RecordList.vue";
+import RecordList from "../components/RecordList.vue";
 import SelectWidget from "../components/SelectWidget.vue";
 import FormBtn from "../components/FormBtn.vue";
 import RecordListShimmer from '../components/RecordListShimmer.vue'
@@ -70,7 +73,7 @@ export default {
   name: "Dashboard",
   components: {
     SideBar,
-    // RecordList,
+    RecordList,
     SelectWidget,
     FormBtn,
     RecordListShimmer
@@ -80,12 +83,12 @@ export default {
       // Select fields lists
       scanOptions: [
         {
-          title: "Scan Option 1",
+          title: "Scan needed in the left cerebral hemisphere",
         },
       ],
       mriOptions: [
         {
-          title: "MRI Option 1",
+          title: "Full body MRI",
         },
       ]
     };

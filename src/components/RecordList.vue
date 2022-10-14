@@ -2,7 +2,7 @@
   <ul>
     
     <li v-for="record in recordlist" :key="record.id">
-      <input type="checkbox" readonly />
+      <input type="checkbox"/>
       <h6>{{record.title}}</h6>
     </li>
     

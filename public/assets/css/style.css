@@ -111,7 +111,8 @@ nav ul li .icon ion-icon{
     color: var(--blueBtn);
 }
 .container-form h6{
-    font-size: 8px;
+    margin-left: 4px;
+    font-size: 11px;
 }
 .container-section{
     margin: 20px 0px;
