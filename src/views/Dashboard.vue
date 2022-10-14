@@ -23,27 +23,35 @@
         <p>Click the tabs to view and edit patient medical details</p>
       </div>
       <div class="container-form">
-        <form>
-        <!--X-Ray section starts here  -->
-        <div class="container-section">
-          <h5>X-Ray</h5>
-          <RecordListShimmer v-if="!APIXrayList.length" />
-          <RecordList v-else :recordlist="APIXrayList" />
-          
-        </div>
+        <form @submit="createRecord">
+          <!--X-Ray section starts here  -->
+          <div class="container-section">
+            <h5>X-Ray</h5>
+            <RecordListShimmer v-if="!APIXrayList.length" />
+            <ul v-else>
+              <li v-for="record in APIXrayList" :key="record.id">
+                <input :id="record.id" :value="record.id" v-model="selectedInvestigations" type="checkbox"/>
+                <h6>{{ record.title }}</h6>
+              </li>
+            </ul>
+          </div>
 
-        <hr />
-        <!-- ends here -->
-        <!-- Ultrasound Scan starts here -->
-        <div class="container-section">
-          <h5>Ultrasound Scan</h5>
-          <RecordListShimmer v-if="!APIUltrasoundList.length" />
-          <RecordList v-else :recordlist="APIUltrasoundList" />
-          
-        </div>
-        <hr />
-        <!-- ends here -->
-        
+          <hr />
+          <!-- ends here -->
+          <!-- Ultrasound Scan starts here -->
+          <div class="container-section">
+            <h5>Ultrasound Scan</h5>
+            <RecordListShimmer v-if="!APIUltrasoundList.length" />
+            <ul v-else>
+              <li v-for="record in APIUltrasoundList" :key="record.id">
+                <input :id="record.id" :value="record.id" v-model="selectedInvestigations" type="checkbox" />
+                <h6>{{ record.title }}</h6>
+              </li>
+            </ul>
+          </div>
+          <hr />
+          <!-- ends here -->
+
           <div id="fields">
             <div class="form-control">
               <label class="title">CT Scan</label>
@@ -63,23 +71,23 @@
 
 <script>
 import SideBar from "../components/SideBar.vue";
-import RecordList from "../components/RecordList.vue";
 import SelectWidget from "../components/SelectWidget.vue";
 import FormBtn from "../components/FormBtn.vue";
-import RecordListShimmer from '../components/RecordListShimmer.vue'
-import { gql } from 'graphql-tag'
+import RecordListShimmer from "../components/RecordListShimmer.vue";
+import { useMutation } from '@vue/apollo-composable'
+import { gql } from "graphql-tag";
 
 export default {
   name: "Dashboard",
   components: {
     SideBar,
-    RecordList,
     SelectWidget,
     FormBtn,
-    RecordListShimmer
+    RecordListShimmer,
   },
   data() {
     return {
+      selectedInvestigations: [],
       // Select fields lists
       scanOptions: [
         {
@@ -90,7 +98,7 @@ export default {
         {
           title: "Full body MRI",
         },
-      ]
+      ],
     };
   },
   mounted() {
@@ -104,18 +112,41 @@ export default {
       return this.$store.state.ultrasoundList;
     },
   },
-  methods:{
-    async login() {
-      let result = await this.$apollo.mutate({
-        // Query
-        mutation: gql`mutation{
-        login(email: "tester@kompletecare.com", password: "password")
-    }`
-      })
-      console.log("LOGIN RESULT")
-      console.log(result)
+  methods: {
+    createRecord(e){
+      e.preventDefault()
+      const CREATE_RECORD_MUTATION = gql`
+        mutation {
+          add_medical_record(
+              investigations: [8,9,5], 
+              ctscan: "Scan needed in the left cerebral hemisphere",
+              mri: "Full body MRI",
+              developer: "Developer"
+            ){
+              id,
+              patient{
+                id,
+                name,
+                email
+              },
+              investigations{
+              id,
+              title,
+              type{title}
+              },
+              ctscan,
+              mri,
+              created_at
+            }
+        } 
+      `;
+      const { response } = useMutation(CREATE_RECORD_MUTATION);
+      console.log("RES : ", response)
+      // const data = await computed(() => response.value?.investigations ?? [])
+      // alert(this.selectedInvestigations);
+      
     }
-  }
+  },
 };
 </script>
 
