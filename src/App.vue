@@ -1,14 +1,14 @@
 <template>
-  <HelloWorld msg="Welcome Patient Record App"/>
+  <Dashboard/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Dashboard from './views/Dashboard.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Dashboard
   }
 }
 </script>
