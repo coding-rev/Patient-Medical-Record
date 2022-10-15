@@ -151,10 +151,8 @@ export default {
             }
         } 
       `;
-      console.log('QUERY : ', CREATE_RECORD_MUTATION)
-      let res = await useMutation(CREATE_RECORD_MUTATION)
+      await useMutation(CREATE_RECORD_MUTATION)
       this.notifyUser()
-      console.log('DATA : ', res)    
       
     }
   },
