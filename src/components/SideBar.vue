@@ -22,7 +22,7 @@
         </li>
         <li>
           <span class="icon">
-            <ion-icon name="settings"></ion-icon>
+            <ion-icon name="git-network"></ion-icon>
           </span>
           <span class="title">Medical Records</span>
         </li>
@@ -34,13 +34,13 @@
         </li>
         <li>
           <span class="icon">
-            <ion-icon name="settings"></ion-icon>
+            <ion-icon name="chatbubbles"></ion-icon>
           </span>
           <span class="title">Messages</span>
         </li>
         <li>
           <span class="icon">
-            <ion-icon name="settings"></ion-icon>
+            <ion-icon name="briefcase"></ion-icon>
           </span>
           <span class="title">Resources</span>
         </li>
@@ -53,7 +53,7 @@
         </li>
         <li>
           <span class="icon">
-            <ion-icon name="settings"></ion-icon>
+            <ion-icon name="headset"></ion-icon>
           </span>
           <span class="title">Contact Support</span>
         </li>
