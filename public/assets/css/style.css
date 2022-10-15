@@ -8,6 +8,10 @@ li{
 a{
     text-decoration: none;
 }
+option{
+    font-size: 15px;
+    padding: 10px;
+}
 :root{
     --blue:#2A36A4;
     --blueBtn: #382F90;

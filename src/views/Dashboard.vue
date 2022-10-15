@@ -2,6 +2,7 @@
   <main>
     <SideBar />
     <section class="container">
+      <Alert v-if="isNotify"/>
       <div class="container-header">
         <ul>
           <li>
@@ -23,7 +24,7 @@
         <p>Click the tabs to view and edit patient medical details</p>
       </div>
       <div class="container-form">
-        <form @submit="createRecord">
+        <form @submit="createRecord" id="recordForm">
           <!--X-Ray section starts here  -->
           <div class="container-section">
             <h5>X-Ray</h5>
@@ -74,8 +75,9 @@ import SideBar from "../components/SideBar.vue";
 import SelectWidget from "../components/SelectWidget.vue";
 import FormBtn from "../components/FormBtn.vue";
 import RecordListShimmer from "../components/RecordListShimmer.vue";
-import { useMutation } from '@vue/apollo-composable'
-import { gql } from "graphql-tag";
+import Alert from '../components/Alert.vue'
+// import { useMutation } from '@vue/apollo-composable'
+// import { gql } from "graphql-tag";
 
 export default {
   name: "Dashboard",
@@ -84,9 +86,11 @@ export default {
     SelectWidget,
     FormBtn,
     RecordListShimmer,
+    Alert,
   },
   data() {
     return {
+      isNotify: false,
       selectedInvestigations: [],
       // Select fields lists
       scanOptions: [
@@ -113,35 +117,44 @@ export default {
     },
   },
   methods: {
+    async notifyUser(){
+      this.isNotify = true
+      document.getElementById( "recordForm" ).reset()
+      this.selectedInvestigations =[]
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      this.isNotify = false
+    },
     createRecord(e){
       e.preventDefault()
-      const CREATE_RECORD_MUTATION = gql`
-        mutation {
-          add_medical_record(
-              investigations: [8,9,5], 
-              ctscan: "Scan needed in the left cerebral hemisphere",
-              mri: "Full body MRI",
-              developer: "Developer"
-            ){
-              id,
-              patient{
-                id,
-                name,
-                email
-              },
-              investigations{
-              id,
-              title,
-              type{title}
-              },
-              ctscan,
-              mri,
-              created_at
-            }
-        } 
-      `;
-      const { response } = useMutation(CREATE_RECORD_MUTATION);
-      console.log("RES : ", response)
+      this.notifyUser()
+      // const CREATE_RECORD_MUTATION = gql`
+      //   mutation {
+      //     add_medical_record(
+      //         investigations: [8,9,5], 
+      //         ctscan: "Scan needed in the left cerebral hemisphere",
+      //         mri: "Full body MRI",
+      //         developer: "Developer"
+      //       ){
+      //         id,
+      //         patient{
+      //           id,
+      //           name,
+      //           email
+      //         },
+      //         investigations{
+      //         id,
+      //         title,
+      //         type{title}
+      //         },
+      //         ctscan,
+      //         mri,
+      //         created_at
+      //       }
+      //   } 
+      // `;
+
+      // const { mutate:createRecord } = useMutation(CREATE_RECORD_MUTATION);
+      // console.log("RES : ", response)
       // const data = await computed(() => response.value?.investigations ?? [])
       // alert(this.selectedInvestigations);
       
