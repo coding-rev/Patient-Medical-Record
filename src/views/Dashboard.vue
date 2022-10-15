@@ -76,8 +76,8 @@ import SelectWidget from "../components/SelectWidget.vue";
 import FormBtn from "../components/FormBtn.vue";
 import RecordListShimmer from "../components/RecordListShimmer.vue";
 import Alert from '../components/Alert.vue'
-// import { useMutation } from '@vue/apollo-composable'
-// import { gql } from "graphql-tag";
+import { useMutation } from '@vue/apollo-composable'
+import { gql } from "graphql-tag";
 
 export default {
   name: "Dashboard",
@@ -124,39 +124,37 @@ export default {
       await new Promise(resolve => setTimeout(resolve, 2000));
       this.isNotify = false
     },
-    createRecord(e){
+    async createRecord(e){
       e.preventDefault()
+      const CREATE_RECORD_MUTATION = gql`
+        mutation {
+          add_medical_record(
+              investigations: [${this.selectedInvestigations.toString()}], 
+              ctscan: "Scan needed in the left cerebral hemisphere",
+              mri: "Full body MRI",
+              developer: "Developer"
+            ){
+              id,
+              patient{
+                id,
+                name,
+                email
+              },
+              investigations{
+              id,
+              title,
+              type{title}
+              },
+              ctscan,
+              mri,
+              created_at
+            }
+        } 
+      `;
+      console.log('QUERY : ', CREATE_RECORD_MUTATION)
+      let res = await useMutation(CREATE_RECORD_MUTATION)
       this.notifyUser()
-      // const CREATE_RECORD_MUTATION = gql`
-      //   mutation {
-      //     add_medical_record(
-      //         investigations: [8,9,5], 
-      //         ctscan: "Scan needed in the left cerebral hemisphere",
-      //         mri: "Full body MRI",
-      //         developer: "Developer"
-      //       ){
-      //         id,
-      //         patient{
-      //           id,
-      //           name,
-      //           email
-      //         },
-      //         investigations{
-      //         id,
-      //         title,
-      //         type{title}
-      //         },
-      //         ctscan,
-      //         mri,
-      //         created_at
-      //       }
-      //   } 
-      // `;
-
-      // const { mutate:createRecord } = useMutation(CREATE_RECORD_MUTATION);
-      // console.log("RES : ", response)
-      // const data = await computed(() => response.value?.investigations ?? [])
-      // alert(this.selectedInvestigations);
+      console.log('DATA : ', res)    
       
     }
   },
